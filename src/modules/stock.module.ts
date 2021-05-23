@@ -4,17 +4,12 @@ import { StockSchema, Stock } from '../schemas';
 import { StockController } from '../controllers';
 import { StockService } from '../services';
 import { Connection } from 'mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
-  imports: [DatabaseModule],
-  controllers: [StockController],
-  providers: [
-    StockService,
-    {
-      provide: Stock.name,
-      useFactory: (connection: Connection) =>
-        connection.model(Stock.name, StockSchema),
-      inject: ['DATABASE_CONNECTION'],
-    },
+  imports: [
+    MongooseModule.forFeature([{ name: Stock.name, schema: StockSchema }]),
   ],
+  controllers: [StockController],
+  providers: [StockService],
 })
 export class StockModule {}
