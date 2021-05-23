@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Put, Delete,Body } from '@nestjs/common';
 import { Stock } from '../schemas';
 import { StockService } from '../services';
 @Controller('stocks')
@@ -6,7 +6,7 @@ export class StockController {
   constructor(private service: StockService) {}
 
   @Post()
-  async create(data: Stock): Promise<Stock> {
+  async create(@Body() data: Stock): Promise<Stock> {
     return await this.service.create(data);
   }
   @Put()
